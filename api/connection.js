@@ -2,15 +2,15 @@ const mysql = require('mysql');
 
 var connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'NBA-GameCast',
+    user: 'nba_user',
+    password: 'password1234_',
+    database: 'NBA_GameCast',
     multipleStatements: true
 });
 
 connection.connect((err) => {
     if (err) {
-        console.log('Error connecting to database');
+        console.log('Error connecting to database', err.message);
         return;
     }
     console.log('Connected to database');
