@@ -2,10 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+app.use(express.json());
 
 const tournamentRoutes = require('./routes/tournaments');
+const userRoutes = require('./routes/user');
 
 app.use('/tournaments', tournamentRoutes);
+app.use('/user', userRoutes);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
