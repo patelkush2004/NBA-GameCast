@@ -27,3 +27,9 @@ the application deletes the user with the id provided in the route parameters
 Note: The secret key used for signing the JWT token is hardcoded as "somekey". 
 In a real-world application, this should be replaced with a secure, randomly 
 generated key that is stored securely and not included directly in the code.
+
+
+- Routes:
+    - tournaments
+    - divisions
+    - user

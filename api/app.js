@@ -6,9 +6,19 @@ app.use(express.json());
 
 const tournamentRoutes = require('./routes/tournaments');
 const userRoutes = require('./routes/user');
+const divisionRoutes = require('./routes/division');
+const gameRoutes = require('./routes/game');
+const locationRoutes = require('./routes/location');
+const playerRoutes = require('./routes/player');
+const teamRoutes = require('./routes/team');
 
 app.use('/tournaments', tournamentRoutes);
 app.use('/user', userRoutes);
+app.use('/divisions', divisionRoutes);
+app.use('/games', gameRoutes);
+app.use('/locations', locationRoutes);
+app.use('/players', playerRoutes);
+app.use('/teams', teamRoutes);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
