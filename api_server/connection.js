@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
     user: 'nba_user',
     password: 'password1234_',
     database: 'NBA_GameCast',
-    multipleStatements: true
+    multipleStatements: true,
 });
 
 connection.connect((err) => {

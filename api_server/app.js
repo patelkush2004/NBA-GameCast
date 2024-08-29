@@ -4,13 +4,13 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(express.json());
 
-const tournamentRoutes = require('./routes/tournaments');
-const userRoutes = require('./routes/user');
-const divisionRoutes = require('./routes/division');
-const gameRoutes = require('./routes/game');
-const locationRoutes = require('./routes/location');
-const playerRoutes = require('./routes/player');
-const teamRoutes = require('./routes/team');
+const tournamentRoutes = require('./api/routes/tournaments');
+const userRoutes = require('./api/routes/user');
+const divisionRoutes = require('./api/routes/division');
+const gameRoutes = require('./api/routes/game');
+const locationRoutes = require('./api/routes/location');
+const playerRoutes = require('./api/routes/player');
+const teamRoutes = require('./api/routes/team');
 
 app.use('/tournaments', tournamentRoutes);
 app.use('/user', userRoutes);
@@ -46,7 +46,7 @@ app.use((error, req, res, next) => {
     res.state = error.status || 500;
     res.json({
       error: {
-        message: error.message
+        message: error.message,
       }
     });
 });
