@@ -1,4 +1,6 @@
+import csv
 import pandas as pd
+import random
 from collections import defaultdict
 
 # 1. Delete row if there is a null value
@@ -30,36 +32,48 @@ for row in team_standings_df.itertuples():
     
 # 3. Calculate and add 'Home Win %', 'Visitor Win %', and 'Home Won' in Games
 
-home_win_perc_col = []
-visitor_win_perc_col = []
-home_won_col = []
 num_of_wins = {}
 num_of_wins = defaultdict(lambda: 0, num_of_wins)
 num_of_losses = {}
 num_of_losses = defaultdict(lambda: 0, num_of_losses)
 
+team1_win_perc_col = []
+team2_win_perc_col = []
+team1_won_col = []
+processed_game_csv = open(f'./ml_server/datasets/processed/{games_file}.csv', 'w')
+csv_writer = csv.writer(processed_game_csv)
+csv_writer.writerow(['Team 1', 'Team 2', 'Team 1 Win %', 'Team 2 Win %', 'Team 1 At Home', 'Team 1 Won'])
+
 for row in games_df.itertuples():
-    home = row.Home
-    visitor = row.Visitor
-    home_pts = row._2
-    visitor_pts = row._4
+    rnd = random.randint(0, 1)
     
-    if home_pts > visitor_pts:
-        home_won_col.append(1)
-        num_of_wins[home] = num_of_wins[home] + 1
-        num_of_losses[visitor] = num_of_losses[visitor] + 1
-    else:
-        home_won_col.append(0)
-        num_of_wins[visitor] = num_of_wins[visitor] + 1
-        num_of_losses[home] = num_of_losses[home] + 1
+    if rnd == 0:
+        team1_at_home = 0
+        team1 = row.Visitor
+        team1_pts = row._4
+        team2 = row.Home
+        team2_pts = row._2
+    elif rnd == 1:
+        team1_at_home = 1
+        team1 = row.Home
+        team1_pts = row._2
+        team2 = row.Visitor
+        team2_pts = row._4
         
-    curr_home_perc = num_of_wins[home] / (num_of_wins[home] + num_of_losses[home])
-    curr_visitor_perc = num_of_wins[visitor] / (num_of_wins[visitor] + num_of_losses[visitor])
-    adjusted_home_perc = (previous_win_percent[home] + 2*curr_home_perc)/3
-    adjusted_visitor_perc = (previous_win_percent[visitor] + 2*curr_visitor_perc)/3
-    home_win_perc_col.append(adjusted_home_perc)
-    visitor_win_perc_col.append(adjusted_visitor_perc)
+    # 3.2
+    if team1_pts > team2_pts:
+        team1_won = 1
+        num_of_wins[team1] = num_of_wins[team1] + 1
+        num_of_losses[team2] = num_of_losses[team2] + 1
+    else:
+        team1_won = 0
+        num_of_wins[team2] = num_of_wins[team2] + 1
+        num_of_losses[team1] = num_of_losses[team1] + 1
+        
+    curr_team1_perc = num_of_wins[team1] / (num_of_wins[team1] + num_of_losses[team1])
+    curr_team2_perc = num_of_wins[team2] / (num_of_wins[team2] + num_of_losses[team2])
     
-processed_game_df = pd.DataFrame(data={'Home Win %': home_win_perc_col, 'Visitor Win %': visitor_win_perc_col, 'Home Won': home_won_col})
-processed_game_df = processed_game_df.round(3)
-processed_game_df.to_csv(f'./ml_server/datasets/processed/{games_file}.csv', index=False)
+    adjusted_team1_perc = (previous_win_percent[team1] + 2*curr_team1_perc)/3
+    adjusted_team2_perc = (previous_win_percent[team2] + 2*curr_team2_perc)/3
+    
+    csv_writer.writerow([team1, team2, adjusted_team1_perc, adjusted_team2_perc, team1_at_home, team1_won])
