@@ -9,29 +9,14 @@ const DivisionController = require("../controllers/division");
 
 router.get("/", DivisionController.getAllDivisions);
 
-router.post(
-  "/",
-  authenticate,
-  authorize([Role.Admin, Role.Owner]),
-  DivisionController.postDivision
-);
+router.post("/", authenticate, authorize([Role.Admin, Role.Owner]), DivisionsController.postDivision);
 
 router.get("/:divisionId", DivisionController.getDivision);
 
 router.get("/:divisionId/teams", DivisionController.getTeamsInDivision);
 
-router.patch(
-  "/:divisionId",
-  authenticate,
-  authorize([Role.Admin, Role.Owner]),
-  DivisionController.patchDivision
-);
+router.patch("/:divisionId", authenticate, authorize([Role.Admin, Role.Owner]), DivisionsController.patchDivision);
 
-router.delete(
-  "/:divisionId",
-  authenticate,
-  authorize([Role.Admin, Role.Owner]),
-  DivisionController.deleteDivision
-);
+router.delete("/:divisionId", authenticate, authorize([Role.Admin, Role.Owner]), DivisionsController.deleteDivision);
 
 module.exports = router;

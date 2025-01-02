@@ -10,12 +10,7 @@ const TournamentController = require("../controllers/tournament");
 // Get all tournaments
 router.get("/", TournamentController.getAllTournaments);
 
-router.post(
-  "/",
-  authenticate,
-  authorize([Role.Admin, Role.Owner]),
-  TournamentController.postTournament
-);
+router.post("/", authenticate, authorize([Role.Admin, Role.Owner]), TournamentsController.postTournament);
   
 router.get("/:tournamentId", TournamentController.getTournament);
 
