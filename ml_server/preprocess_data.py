@@ -26,6 +26,7 @@ if missing_values > 0:
 # 2. Create dictionary for 'Previous Win %'
 
 previous_win_percent = {}
+
 for row in team_standings_df.itertuples():
     previous_win_percent[row._1] = row.Wins / (row.Wins + row.Losses)
     

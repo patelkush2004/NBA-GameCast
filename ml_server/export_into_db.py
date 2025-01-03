@@ -2,14 +2,14 @@ import csv
 import pandas as pd
 import mysql.connector
 
-cnx = mysql.connector.connect(user='root', password='whatIsLife42?', host='localhost', database='TournInn', autocommit=True)
+cnx = mysql.connector.connect(user='root', password='NBA_GameCast', host='localhost', database='NBA_GameCast', autocommit=True)
 cursor = cnx.cursor()
 
 def export_teams():
     csv_data = pd.read_csv('./ml_server/datasets/raw/teams.csv')
 
     for row in csv_data.itertuples():
-        insert_team = f"INSERT INTO TournInn.teams (name, divisionId) VALUES ('{row.Name}', 2);"
+        insert_team = f"INSERT INTO NBA_GameCast.teams (name, divisionId) VALUES ('{row.Name}', 2);"
         cursor.execute(insert_team)
 
         
@@ -40,7 +40,7 @@ def export_games():
             winner_id = team2_id
 
         query = f"""
-            INSERT INTO TournInn.games
+            INSERT INTO NBA_GameCast.games
             (winnerId, team1Id, team2Id, team1Score, team2Score, homeTeamId, tournamentId, seasonId, sport)
             VALUES
             ({winner_id}, {team1_id}, {team2_id}, {team1_pts}, {team2_pts}, '{home_team_id}', 1, 1, 'basketball')
@@ -57,7 +57,7 @@ def export_team_standings():
         teamid = cursor.fetchone()[0]
 
         query = f"""
-            INSERT INTO TournInn.teamStandings
+            INSERT INTO NBA_GameCast.teamStandings
             (teamRank, teamName, wins, losses, seasonId, teamId)
             VALUES
             ({row.Index + 1}, '{row._1}', {row.Wins}, {row.Losses}, {seasonId}, {teamid})

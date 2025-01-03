@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import mysql.connector
 
-cnx = mysql.connector.connect(user='root', password='whatIsLife42?', host='localhost', database='TournInn')
+cnx = mysql.connector.connect(user='root', password='NBA_GameCast', host='localhost', database='NBA_GameCast')
 cursor = cnx.cursor()
 
 
