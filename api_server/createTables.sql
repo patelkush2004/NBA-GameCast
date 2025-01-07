@@ -70,3 +70,12 @@ CREATE TABLE NBA_GameCast.games (
     FOREIGN KEY (locationId) REFERENCES NBA_GameCast.locations(id),
     FOREIGN KEY (tournamentId) REFERENCES NBA_GameCast.tournaments(id)
 );
+
+CREATE TABLE NBA_GameCast.teamStandings (
+    teamRank INT NOT NULL,
+    teamName VARCHAR(50),
+    wins INT,
+    losses INT,
+    seasonId INT,
+    teamId INT
+);

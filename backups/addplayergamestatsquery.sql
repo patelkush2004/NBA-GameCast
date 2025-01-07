@@ -1,10 +1,10 @@
-CREATE TABLE TournInn.seasons (
+CREATE TABLE NBA_GameCast.seasons (
 	id INT NOT NULL AUTO_INCREMENT UNIQUE,
     name VARCHAR(32),
     description VARCHAR(256),
     PRIMARY KEY (id)
 );
-CREATE TABLE TournInn.playerGameStats (
+CREATE TABLE NBA_GameCast.playerGameStats (
 	id INT NOT NULL AUTO_INCREMENT UNIQUE,
     playerId INT NOT NULL,
     playerAge INT,
@@ -37,4 +37,4 @@ CREATE TABLE TournInn.playerGameStats (
     FOREIGN KEY (opponentTeamId) REFERENCES teams(id),
     FOREIGN KEY (seasonId) REFERENCES seasons(id)
 );
-ALTER TABLE TournInn.teams ADD UNIQUE (name)
+ALTER TABLE NBA_GameCast.teams ADD UNIQUE (name)
